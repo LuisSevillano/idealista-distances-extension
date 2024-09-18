@@ -1,0 +1,24 @@
+.floating-distance-popup {
+    position: absolute;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid black;
+    z-index: 9999;
+    width: 300px;
+    top: 0;
+    left: 0;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.floating-distance-popup p {
+    margin: 0;
+}
+
+.close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 5px;
+}

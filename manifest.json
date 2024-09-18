@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Distancia a Madrid en Idealista",
+  "version": "0.1",
+  "description": "Muestra la distancia por carretera desde Madrid en anuncios de Idealista.",
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.idealista.com/*"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "icons": {
+    "48": "icon.png"
+  }
+}
