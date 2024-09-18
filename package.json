@@ -1,0 +1,35 @@
+{
+  "name": "idealista-distances-extension",
+  "version": "0.0.1",
+  "description": "Chrome extension that displays driving distance and estimated time from your desired location to properties on Idealista.com, with customizable starting coordinates and API key",
+  "main": "content.js",
+  "scripts": {
+    "precommit": "lint-staged",
+    "format": "prettier --write .",
+    "lint": "prettier --check ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  },
+  "lint-staged": {
+    "**/*.{html,css,js}": [
+      "npm run format"
+    ]
+  },
+  "keywords": [
+    "Idealista",
+    "chrome",
+    "extension",
+    "distance",
+    "GraphHopper"
+  ],
+  "author": "luis sevillano",
+  "license": "MIT",
+  "dependencies": {
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3"
+  }
+}
