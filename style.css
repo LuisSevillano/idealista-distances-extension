@@ -1,24 +1,76 @@
+.floating-distance-popup .km-distance {
+  font-size: 0.9rem;
+}
+.floating-distance-popup .color-distance {
+  font-weight: bold;
+}
 .floating-distance-popup {
-    position: absolute;
-    background-color: white;
-    padding: 10px;
-    border: 1px solid black;
-    z-index: 9999;
-    width: 300px;
-    top: 0;
-    left: 0;
-    margin-left: 10px;
-    margin-top: 10px;
+  position: fixed;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid black;
+  z-index: 9999;
+  width: 300px;
+  top: 0;
+  left: 0;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 
 .floating-distance-popup p {
-    margin: 0;
+  margin: 0;
+}
+
+.show-in-list {
+  display: none;
+}
+
+.not-show-in-list {
+  display: inline;
+}
+
+.floating-distance-popup.in-list .show-in-list {
+  display: inline;
+}
+
+.floating-distance-popup.in-list .not-show-in-list {
+  display: none;
+}
+
+.floating-distance-popup.in-list {
+  position: relative;
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+
+.floating-distance-popup.in-list .close-btn {
+  display: none;
 }
 
 .close-btn {
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin-right: 5px;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 5px;
+}
+
+.target-green {
+  outline: 1px solid green;
+  background: green;
+  padding: 0.15rem;
+}
+
+.target-orange {
+  outline: 1px solid orange;
+  background: orange;
+  padding: 0.15rem;
+}
+
+.discarded {
+  outline: 1px solid red;
+  background: red;
+  padding: 0.15rem;
+  opacity: 0.8 !important;
 }
