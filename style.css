@@ -59,18 +59,27 @@
 .target-green {
   outline: 1px solid green;
   background: green;
-  padding: 0.15rem;
 }
 
 .target-orange {
   outline: 1px solid orange;
   background: orange;
-  padding: 0.15rem;
 }
 
 .discarded {
   outline: 1px solid red;
   background: red;
-  padding: 0.15rem;
   opacity: 0.8 !important;
+}
+.dot-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  outline: 1px solid #00000082;
+  border: 1px solid white;
 }

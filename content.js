@@ -1,17 +1,19 @@
-const apiKey = "27fef946-b325-46ab-a40c-698b24a9e94a";
 // Fetch coordinates and calculate the driving distance
 function fetchRouteData(latitude, longitude, callback) {
-  console.log("fetchRouteData", { latitude, longitude, callback });
+  chrome.storage.sync.get(
+    ["apiKey", "latitude", "longitude"],
+    function (items) {
+      const start = `${items.latitude || "40.4168"},${items.longitude || "-3.7038"}`; // Default is Madrid
+      const end = `${latitude},${longitude}`;
+      console.log(items);
+      const routeUrl = `https://graphhopper.com/api/1/route?point=${start}&point=${end}&vehicle=car&key=${items.apiKey}`;
 
-  const start = "40.4168,-3.7038"; // Madrid coordinates
-  const end = `${latitude},${longitude}`;
-
-  const routeUrl = `https://graphhopper.com/api/1/route?point=${start}&point=${end}&vehicle=car&key=${apiKey}`;
-
-  fetch(routeUrl)
-    .then(processRouteResponse)
-    .then((data) => calculateTimeAndDistance(data, callback))
-    .catch(logRouteError);
+      fetch(routeUrl)
+        .then(processRouteResponse)
+        .then((data) => calculateTimeAndDistance(data, callback))
+        .catch(logRouteError);
+    },
+  );
 }
 
 // Handle the response from the GraphHopper API
@@ -58,6 +60,13 @@ function getTimeColor(hours, minutes) {
   }
 }
 
+function createDotIndicator(colorData) {
+  const div = document.createElement("div");
+  div.classList.add("dot-indicator");
+  div.style.background = colorData.color;
+  return div;
+}
+
 function getPopupHTMLTemplate(distance, time, colorData) {
   return `<div>
             <span class="close-btn">×</span>
@@ -90,7 +99,6 @@ function displayPopupInListing(item, latitude, longitude) {
   if (existingPopup) {
     existingPopup.remove();
   }
-
   const popup = createPopup("", "", "green", isList);
 
   // Insert the popup just above the element with the 'price-row' class
@@ -98,7 +106,9 @@ function displayPopupInListing(item, latitude, longitude) {
   priceRow.parentNode.insertBefore(popup, priceRow);
 
   fetchRouteData(latitude, longitude, (distance, time, color) => {
+    const dotIndicator = createDotIndicator(color);
     item.classList.add(color.className);
+    item.appendChild(dotIndicator);
     updatePopupContent(popup, distance, time, color);
   });
 }
@@ -203,9 +213,18 @@ function logRouteError(error) {
 
 // Determine the context of the page and trigger the appropriate functions
 window.addEventListener("load", function () {
-  if (window.location.href.includes("/inmueble/")) {
-    handleDetailView();
-  } else {
-    observeListings();
-  }
+  chrome.storage.sync.get(["apiKey"], function ({ apiKey }) {
+    if (!apiKey) {
+      console.log(
+        "Please set your GraphHopper API Key in the extension settings.",
+      );
+      return;
+    } else {
+      if (window.location.href.includes("/inmueble/")) {
+        handleDetailView();
+      } else {
+        observeListings();
+      }
+    }
+  });
 });

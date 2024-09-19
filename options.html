@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Extension Settings | Idealista distances Chrome Extension</title>
+    <style>
+      html {
+        font-family: Arial, sans-serif;
+        background: #45474e;
+        color: white;
+      }
+      form {
+        max-width: 500px;
+      }
+      .setting {
+        margin-bottom: 2.5rem;
+      }
+      .setting-label {
+        margin-bottom: 0.5rem;
+      }
+      .wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 16px;
+        border: none;
+      }
+      button {
+        padding: 5px 10px;
+        background-color: #387e98;
+        color: #fff;
+        border: 1px solid white;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #4e8ba2;
+      }
+      .description {
+        font-size: 12px;
+        color: #d8d8d8;
+        margin-bottom: 16px;
+      }
+      h3 {
+        display: inline-block;
+        padding-right: 0.25rem;
+        padding-bottom: 0.1rem;
+        border-bottom: 1px solid white;
+        margin-top: 2rem;
+      }
+      a,
+      a:visited,
+      a:active {
+        color: gray;
+      }
+
+      p {
+        margin: 0;
+        line-height: 1.5;
+      }
+      .setting-value {
+        display: flex;
+        align-items: flex-start;
+      }
+      .setting-value.inline button {
+        margin-left: 0.5rem;
+        width: 230px;
+        border: none;
+      }
+
+      header p a,
+      header p a:visited,
+      header p a:active {
+        color: #dbf75c;
+        text-decoration: none;
+      }
+      small {
+        font-weight: normal;
+      }
+      .origin-options button:not(:last-child) {
+        margin-right: 5px;
+      }
+      .origin-options button {
+        flex: 1 auto;
+      }
+      .break {
+        border-bottom: 1px solid gray;
+        margin-bottom: 1rem;
+        margin-top: 4rem;
+      }
+      .origin-options {
+        display: flex;
+      }
+      .secondary,
+      .secondary button,
+      .secondary p {
+        color: rgb(192, 192, 192) !important;
+        font-size: 0.8rem;
+      }
+      .secondary button {
+        background-color: #74868d;
+        border-color: #a9bdc4;
+      }
+      .submit {
+        font-size: 1rem;
+        border-color: black;
+        float: right;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Idealista distances</h1>
+        <p>
+          Chrome extension that displays driving distance and estimated time
+          from your desired location to properties on
+          <a href="https://www.idealista.com/">idealista.com</a>, with
+          customizable starting coordinates and API key.
+        </p>
+      </header>
+      <main>
+        <h3>Settings</h3>
+        <div class="setting">
+          <div class="setting-label">
+            <label for="api-key">API Key for GraphHopper <small>(it's free)</small></label>
+          </div>
+          <div class="setting-value">
+            <input type="text" id="api-key" placeholder="Enter your API key here" />
+          </div>
+          <div class="setting-desc">
+            <div class="description">
+              <p>
+                This key is necessary to calculate the route distances and times
+                using their routing services. You can obtain your API key by
+                signing up at
+                <a href="https://graphhopper.com" target="_blank">GraphHopper</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="setting">
+          <div class="setting-label">
+            <label for="coordinates">Origin Coordinates</label>
+          </div>
+          <div class="setting-value">
+            <input type="text" id="coordinates" placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)" />
+          </div>
+          <div class="setting-desc">
+            <div class="description">
+              <p>
+                Specify the coordinates of your origin point or select one of the
+                options below as a starting point to calculate distances.
+              </p>
+            </div>
+          </div>
+          <div class="origin-options primary">
+            <button data-city="madrid">Madrid</button>
+            <button data-city="lisboa">Lisboa</button>
+            <button data-city="zaragoza">Zaragoza</button>
+            <button data-city="donosti">San Sebastián</button>
+            <button data-city="aranda">Aranda de Duero</button>
+          </div>
+        </div>
+        <div class="break"></div>
+        <div class="setting secondary">
+          <div class="setting-label">
+            <label for="coordinates">Second Location Coordinates <small>(optional)</small>:</label>
+          </div>
+          <div class="setting-value inline">
+            <input type="text" id="coordinates-secondary" placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)" />
+          </div>
+          <div class="setting-desc">
+            <div class="description">
+              <p>
+                Specify the coordinates of your origin point or select one of the
+                options below as a starting point to calculate distances.
+              </p>
+            </div>
+          </div>
+          <div class="origin-options secondary">
+            <button data-city="madrid">Madrid</button>
+            <button data-city="lisboa">Lisboa</button>
+            <button data-city="zaragoza">Zaragoza</button>
+            <button data-city="donosti">San Sebastián</button>
+            <button data-city="aranda">Aranda de Duero</button>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <button id="saveOptions" class="submit">Save Options</button>
+      </main>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>
