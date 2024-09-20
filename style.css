@@ -83,3 +83,12 @@
   outline: 1px solid #00000082;
   border: 1px solid white;
 }
+
+.popup-container {
+  line-height: 1.2;
+}
+
+.floating-distance-popup.secondary-popup.in-list {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}

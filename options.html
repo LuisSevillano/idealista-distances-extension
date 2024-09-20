@@ -115,6 +115,11 @@
         border-color: black;
         float: right;
       }
+      button.active {
+        color: black;
+        background: gray;
+        border-color: black;
+      }
     </style>
   </head>
 
@@ -133,10 +138,16 @@
         <h3>Settings</h3>
         <div class="setting">
           <div class="setting-label">
-            <label for="api-key">API Key for GraphHopper <small>(it's free)</small></label>
+            <label for="api-key"
+              >API Key for GraphHopper <small>(it's free)</small></label
+            >
           </div>
           <div class="setting-value">
-            <input type="text" id="api-key" placeholder="Enter your API key here" />
+            <input
+              type="text"
+              id="api-key"
+              placeholder="Enter your API key here"
+            />
           </div>
           <div class="setting-desc">
             <div class="description">
@@ -144,7 +155,8 @@
                 This key is necessary to calculate the route distances and times
                 using their routing services. You can obtain your API key by
                 signing up at
-                <a href="https://graphhopper.com" target="_blank">GraphHopper</a>.
+                <a href="https://graphhopper.com" target="_blank">GraphHopper</a
+                >.
               </p>
             </div>
           </div>
@@ -154,46 +166,56 @@
             <label for="coordinates">Origin Coordinates</label>
           </div>
           <div class="setting-value">
-            <input type="text" id="coordinates" placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)" />
+            <input
+              type="text"
+              id="coordinates"
+              placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)"
+            />
           </div>
           <div class="setting-desc">
             <div class="description">
               <p>
-                Specify the coordinates of your origin point or select one of the
-                options below as a starting point to calculate distances.
+                Specify the coordinates of your origin point or select one of
+                the options below as a starting point to calculate distances.
               </p>
             </div>
           </div>
           <div class="origin-options primary">
-            <button data-city="madrid">Madrid</button>
-            <button data-city="lisboa">Lisboa</button>
-            <button data-city="zaragoza">Zaragoza</button>
-            <button data-city="donosti">San Sebastián</button>
-            <button data-city="aranda">Aranda de Duero</button>
+            <button data-city="Madrid">Madrid</button>
+            <button data-city="Lisboa">Lisboa</button>
+            <button data-city="Zaragoza">Zaragoza</button>
+            <button data-city="Donosti">San Sebastián</button>
+            <button data-city="Aranda">Aranda de Duero</button>
           </div>
         </div>
         <div class="break"></div>
         <div class="setting secondary">
           <div class="setting-label">
-            <label for="coordinates">Second Location Coordinates <small>(optional)</small>:</label>
+            <label for="coordinates"
+              >Second Location Coordinates <small>(optional)</small>:</label
+            >
           </div>
           <div class="setting-value inline">
-            <input type="text" id="coordinates-secondary" placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)" />
+            <input
+              type="text"
+              id="coordinates-secondary"
+              placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)"
+            />
           </div>
           <div class="setting-desc">
             <div class="description">
               <p>
-                Specify the coordinates of your origin point or select one of the
-                options below as a starting point to calculate distances.
+                Specify the coordinates of your origin point or select one of
+                the options below as a starting point to calculate distances.
               </p>
             </div>
           </div>
           <div class="origin-options secondary">
-            <button data-city="madrid">Madrid</button>
-            <button data-city="lisboa">Lisboa</button>
-            <button data-city="zaragoza">Zaragoza</button>
-            <button data-city="donosti">San Sebastián</button>
-            <button data-city="aranda">Aranda de Duero</button>
+            <button data-city="Madrid">Madrid</button>
+            <button data-city="Lisboa">Lisboa</button>
+            <button data-city="Zaragoza">Zaragoza</button>
+            <button data-city="Donosti">San Sebastián</button>
+            <button data-city="Aranda">Aranda de Duero</button>
           </div>
         </div>
 
