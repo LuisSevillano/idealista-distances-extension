@@ -94,29 +94,24 @@ function createDotIndicator(colorData) {
 }
 
 function getPopupHTMLTemplate(distance, time, colorData, locationLabel) {
-  return `<div>
-      <span class="close-btn">×</span>
-      <p class="">
-        <span class="color-distance" style="color: ${colorData.color};">
-          ${time}
-        </span>
-        from ${locationLabel}
-        <span class="km-distance"> (${distance} km)</span>
-      </p>
-    </div>`;
+  return `
+    <p class="">
+      <span class="color-distance" style="color: ${colorData.color};">
+        ${time}
+      </span>
+      from ${locationLabel}
+      <span class="km-distance"> (${distance} km)</span>
+    </p>`;
 }
 
 // Update the content of the popup with the actual data
 function updatePopupContent(popup, distance, time, color, locationLabel) {
   popup.innerHTML = getPopupHTMLTemplate(distance, time, color, locationLabel);
-  popup
-    .querySelector(".close-btn")
-    .addEventListener("click", closePopup.bind(null, popup));
 }
 
-// Close the popup by removing it from the DOM
-function closePopup(popup) {
-  popup.remove();
+// Close the popup by removing the popup-container
+function closePopup(popupContainer) {
+  popupContainer.remove();
 }
 
 // Display the popup for each listing item
@@ -127,6 +122,15 @@ async function displayPopupInListing(item, latitude, longitude) {
   if (!popupContainer) {
     popupContainer = document.createElement("div");
     popupContainer.classList.add("popup-container");
+    popupContainer.classList.add("in-list");
+
+    // Add close button inside popup-container
+    const closeButton = document.createElement("span");
+    closeButton.classList.add("close-btn");
+    closeButton.innerText = "×";
+    closeButton.addEventListener("click", () => closePopup(popupContainer));
+    popupContainer.appendChild(closeButton);
+
     const priceRow = item.querySelector(".price-row");
     priceRow.parentNode.insertBefore(popupContainer, priceRow);
   }
@@ -223,49 +227,71 @@ async function handleDetailView() {
 
 // Fetch data for the detailed view of a listing
 async function fetchDetailData(propertyId) {
+  const isList = false;
   const apiUrl = `https://www.idealista.com/es/openDetailGallery/${propertyId}?`;
   try {
     const response = await fetch(apiUrl);
-    const data = await response.json();
-    const { coordinates } = data.data.map;
+    const responseData = await response.json();
+    const { coordinates } = responseData.data.map;
     if (coordinates && coordinates.latitude && coordinates.longitude) {
-      const popup = createPopup();
-      document.body.appendChild(popup);
-      const { primaryResult } = await fetchRouteData(
+      let popupContainer = document.createElement("div");
+      popupContainer.classList.add("popup-container");
+
+      // Add close button inside popup-container
+      const closeButton = document.createElement("span");
+      closeButton.classList.add("close-btn");
+      closeButton.innerText = "×";
+      closeButton.addEventListener("click", () => closePopup(popupContainer));
+      popupContainer.appendChild(closeButton);
+
+      const popupPrimary = createPopup();
+      document.body.appendChild(popupContainer);
+      popupContainer.appendChild(popupPrimary);
+
+      const { primaryResult, secondaryResult } = await fetchRouteData(
         coordinates.latitude,
         coordinates.longitude,
       );
       updatePopupContent(
-        popup,
+        popupPrimary,
         primaryResult.distanceInKm,
         primaryResult.timeFormatted,
         primaryResult.color,
         primaryResult.locationLabel,
       );
+
+      if (secondaryResult) {
+        const isSecondaryPopup = true;
+        const popupSecondary = createPopup(isList, isSecondaryPopup);
+        popupContainer.appendChild(popupSecondary);
+
+        updatePopupContent(
+          popupSecondary,
+          secondaryResult.distanceInKm,
+          secondaryResult.timeFormatted,
+          secondaryResult.color,
+          secondaryResult.locationLabel,
+        );
+      }
     }
   } catch (error) {
     console.error("Error fetching detailed view data:", error);
   }
 }
 
-// Log any route-related errors
+// Log any route errors to the console
 function logRouteError(error) {
-  console.error("Error fetching the route:", error);
+  console.error("Error fetching the route data:", error);
 }
 
-// Determine the context of the page and trigger the appropriate functions
-window.addEventListener("load", async function () {
-  const { apiKey } = await chrome.storage.sync.get(["apiKey"]);
-  if (!apiKey) {
-    console.log(
-      "Please set your GraphHopper API Key in the extension settings.",
-    );
-    return;
-  }
-
-  if (window.location.href.includes("/inmueble/")) {
-    handleDetailView();
-  } else {
+// Determine if the page is a listing or a detail view
+function initializePopups() {
+  if (document.querySelector(".listing-items")) {
     observeListings();
+  } else {
+    handleDetailView();
   }
-});
+}
+
+// Wait for the page to fully load before initializing popups
+window.addEventListener("load", initializePopups);
