@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Distancia a Madrid en Idealista",
+  "name": "Idealista driving distances",
   "version": "0.2",
-  "description": "Chrome extension that displays driving distance and estimated time from your desired location to properties on Idealista.com, with customizable starting coordinates and API key.",
+  "description": "Adds driving distance and estimated time from your desired location to properties on Idealista.com, with customizable starting coordinates and API key.",
   "permissions": ["storage", "activeTab"],
   "options_page": "options.html",
   "content_scripts": [
@@ -12,6 +12,9 @@
       "css": ["style.css"]
     }
   ],
+  "icons": {
+    "48": "icon.png"
+  },
   "action": {
     "default_popup": "popup.html"
   }
