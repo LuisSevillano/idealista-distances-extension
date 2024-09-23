@@ -28,22 +28,49 @@
         margin-bottom: 8px;
         font-weight: bold;
       }
+      .inputs {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .setting-desc {
+        margin-top: 16px;
+      }
+      input,
+      button {
+        border-radius: 2px;
+      }
+      .input {
+        width: 48%;
+      }
+      .inputs label {
+        font-weight: normal;
+        font-size: 1rem;
+      }
+      input {
+        border-color: gray;
+        padding: 5px;
+      }
       input[type="text"],
       input[type="password"] {
         width: 100%;
         padding: 5px;
-        margin-bottom: 16px;
         border: none;
       }
+
       button {
         padding: 5px 10px;
-        background-color: #387e98;
+        background-color: transparent;
         color: #fff;
         border: 1px solid white;
         cursor: pointer;
       }
       button:hover {
         background-color: #4e8ba2;
+      }
+      .save-setting button,
+      .secondary .save-setting button {
+        background-color: rgb(80, 80, 80);
       }
       .description {
         font-size: 12px;
@@ -60,17 +87,14 @@
       a,
       a:visited,
       a:active {
-        color: gray;
+        color: #b7b7b7;
       }
 
       p {
         margin: 0;
         line-height: 1.5;
       }
-      .setting-value {
-        display: flex;
-        align-items: flex-start;
-      }
+
       .setting-value.inline button {
         margin-left: 0.5rem;
         width: 230px;
@@ -80,7 +104,7 @@
       header p a,
       header p a:visited,
       header p a:active {
-        color: #dbf75c;
+        color: #cfe95b;
         text-decoration: none;
       }
       small {
@@ -90,35 +114,118 @@
         margin-right: 5px;
       }
       .origin-options button {
-        flex: 1 auto;
+        /* flex: 1 auto; */
       }
       .break {
         border-bottom: 1px solid gray;
         margin-bottom: 1rem;
-        margin-top: 4rem;
+        margin-top: 0.1rem;
       }
       .origin-options {
         display: flex;
       }
       .secondary,
       .secondary button,
+      header p,
       .secondary p {
-        color: rgb(192, 192, 192) !important;
+        color: rgb(192, 192, 192);
         font-size: 0.8rem;
       }
+
       .secondary button {
-        background-color: #74868d;
+        background-color: transparent;
         border-color: #a9bdc4;
       }
       .submit {
         font-size: 1rem;
         border-color: black;
         float: right;
+        background: #77a18e;
+        color: black;
       }
-      button.active {
+      .submit:hover {
+        background: #609c81;
+      }
+      .reset {
+        color: #c1c1c1;
+        background: #858585;
+        margin-right: 2px;
+        border-color: transparent;
+      }
+      .reset:hover {
+        background-color: gray;
+        color: #dedede;
+      }
+      .primary button.active,
+      .secondary button.active {
         color: black;
         background: gray;
         border-color: black;
+      }
+      .spinner-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #45474e;
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #387e98;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      main {
+        position: relative;
+      }
+      .actions {
+        display: flex;
+      }
+      .actions > div {
+        margin-left: 5px;
+      }
+      .delete-setting button {
+        display: flex;
+        height: 100%;
+        background: rgb(222, 193, 193);
+        padding: 3px;
+      }
+      .delete-setting svg {
+        height: 100%;
+      }
+      .delete-setting {
+        width: 30px;
+      }
+      .input-error {
+        border: 2px solid red;
+        background-color: #ffe6e6;
+      }
+
+      .error-message {
+        color: rgb(165, 100, 100);
+        font-size: 0.875rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .error-message.active {
+        display: block;
       }
     </style>
   </head>
@@ -135,6 +242,9 @@
         </p>
       </header>
       <main>
+        <div id="spinner-container" class="spinner-container">
+          <div class="spinner"></div>
+        </div>
         <h3>Settings</h3>
         <div class="setting">
           <div class="setting-label">
@@ -148,6 +258,7 @@
               id="api-key"
               placeholder="Enter your API key here"
             />
+            <span class="error-message">API Key is required</span>
           </div>
           <div class="setting-desc">
             <div class="description">
@@ -162,21 +273,43 @@
           </div>
         </div>
         <div class="setting">
-          <div class="setting-label">
-            <label for="coordinates">Origin Coordinates</label>
+          <div class="inputs">
+            <div class="input">
+              <div class="setting-label">
+                <label for="manual-city-primary">Place name</label>
+              </div>
+              <div class="setting-value">
+                <input
+                  type="text"
+                  id="manual-city-primary"
+                  placeholder="Enter the place name"
+                />
+                <span class="error-message"></span>
+              </div>
+            </div>
+            <div class="input">
+              <div class="setting-label">
+                <label for="manual-coordinates-primary"
+                  >Origin Coordinates</label
+                >
+              </div>
+              <div class="setting-value">
+                <input
+                  type="text"
+                  id="manual-coordinates-primary"
+                  placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)"
+                />
+                <span class="error-message"></span>
+              </div>
+            </div>
           </div>
-          <div class="setting-value">
-            <input
-              type="text"
-              id="coordinates"
-              placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)"
-            />
-          </div>
+
           <div class="setting-desc">
             <div class="description">
               <p>
-                Specify the coordinates of your origin point or select one of
-                the options below as a starting point to calculate distances.
+                Specify the coordinates and name of your origin point or select
+                one of the options below as a starting point to calculate
+                distances.
               </p>
             </div>
           </div>
@@ -184,29 +317,52 @@
             <button data-city="Madrid">Madrid</button>
             <button data-city="Lisboa">Lisboa</button>
             <button data-city="Zaragoza">Zaragoza</button>
-            <button data-city="Donosti">San Sebastián</button>
+            <button data-city="Donosti">Donosti</button>
             <button data-city="Aranda">Aranda de Duero</button>
           </div>
         </div>
+        <header>
+          <p>Second Location Coordinates <small>(optional)</small>:</p>
+        </header>
         <div class="break"></div>
         <div class="setting secondary">
-          <div class="setting-label">
-            <label for="coordinates"
-              >Second Location Coordinates <small>(optional)</small>:</label
-            >
+          <div class="inputs">
+            <div class="input">
+              <div class="setting-label">
+                <label for="manual-city-secondary">Place name</label>
+              </div>
+              <div class="setting-value">
+                <input
+                  type="text"
+                  id="manual-city-secondary"
+                  placeholder="Enter the place name"
+                />
+                <span class="error-message"></span>
+              </div>
+            </div>
+            <div class="input">
+              <div class="setting-label">
+                <label for="manual-coordinates-secondary"
+                  >Origin Coordinates</label
+                >
+              </div>
+              <div class="setting-value">
+                <input
+                  type="text"
+                  id="manual-coordinates-secondary"
+                  placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)"
+                />
+                <span class="error-message"></span>
+              </div>
+            </div>
           </div>
-          <div class="setting-value inline">
-            <input
-              type="text"
-              id="coordinates-secondary"
-              placeholder="Enter the origin coordinates (e.g., 40.4168,-3.7038)"
-            />
-          </div>
+
           <div class="setting-desc">
             <div class="description">
               <p>
-                Specify the coordinates of your origin point or select one of
-                the options below as a starting point to calculate distances.
+                Specify the coordinates and name of your origin point or select
+                one of the options below as a starting point to calculate
+                distances.
               </p>
             </div>
           </div>
@@ -214,13 +370,14 @@
             <button data-city="Madrid">Madrid</button>
             <button data-city="Lisboa">Lisboa</button>
             <button data-city="Zaragoza">Zaragoza</button>
-            <button data-city="Donosti">San Sebastián</button>
+            <button data-city="Donosti">Donosti</button>
             <button data-city="Aranda">Aranda de Duero</button>
           </div>
         </div>
 
         <!-- Save Button -->
         <button id="saveOptions" class="submit">Save Options</button>
+        <button id="resetOptions" class="submit reset">Reset</button>
       </main>
     </div>
     <script src="options.js"></script>
