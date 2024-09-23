@@ -5,22 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Idealista Distance</title>
     <style>
+      :root {
+        --primary: #cfe95b;
+        --secondary: #da557b;
+      }
       body {
         font-family: Arial, sans-serif;
+        background: #dbddd3;
+        width: 200px;
       }
 
       .btn {
         margin-top: 10px;
       }
+      button {
+        padding: 5px 10px;
+        background-color: var(--secondary);
+        color: #fff;
+        border: 1px solid white;
+        cursor: pointer;
+        border-radius: 2px;
+        text-align: center;
+      }
     </style>
   </head>
 
   <body>
-    <h1>Idealista Distance</h1>
+    <h1>Idealista distances</h1>
     <p>Click the settings icon to configure your preferences.</p>
     <button id="open-settings">Open Settings</button>
 
     <script src="popup.js"></script>
-    <!-- Archivo externo -->
   </body>
 </html>
