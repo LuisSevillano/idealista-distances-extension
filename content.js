@@ -170,6 +170,7 @@ async function displayPopupInListing(item, latitude, longitude) {
         secondaryResult.locationLabel,
       );
     }
+    popupContainer.classList.add("active");
   } catch (error) {
     console.error("Error displaying popups:", error);
   }
@@ -273,6 +274,7 @@ async function fetchDetailData(propertyId) {
           secondaryResult.locationLabel,
         );
       }
+      popupContainer.classList.add("active");
     }
   } catch (error) {
     console.error("Error fetching detailed view data:", error);

@@ -76,6 +76,7 @@
   position: static;
 }
 .popup-container {
+  display: none;
   padding: 10px;
   z-index: 10;
   background-color: white;
@@ -86,6 +87,9 @@
   left: 0;
   margin-left: 10px;
   margin-top: 10px;
+}
+.popup-container.active {
+  display: block;
 }
 
 .floating-distance-popup.secondary-popup {
