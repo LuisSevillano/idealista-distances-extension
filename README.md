@@ -67,6 +67,7 @@ Esta extensión para Google Chrome mejora la experiencia en la página web de Id
 3. **Clave API de GraphHopper**: Obtén una clave API gratuita de [GraphHopper](https://www.graphhopper.com/) e ingrésala en la configuración de la extensión.
 4. **Personaliza los Orígenes**: Configura los puntos de origen deseados a través de la página de opciones de la extensión.
 
+
 ## Mejoras Futuras
 
 - Umbrales de Distancia y Colores Personalizables: Permitir a los usuarios definir sus propios umbrales de tiempo y elegir colores personalizados para diferentes rangos de distancia, ofreciendo más flexibilidad en cómo se muestra la información de distancia.
