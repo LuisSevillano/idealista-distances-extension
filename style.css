@@ -76,23 +76,27 @@
   position: static;
 }
 .popup-container {
+  position: absolute;
   display: none;
   padding: 10px;
-  z-index: 10;
+  z-index: 12;
   background-color: white;
   border: 1px solid black;
   line-height: 1.2;
-  position: absolute;
   top: 0;
   left: 0;
   margin-left: 10px;
-  margin-top: 10px;
+  margin-top: 75px;
 }
 .popup-container.active {
   display: block;
 }
 
-.floating-distance-popup.secondary-popup {
+.floating-distance-popup.secondary-popup,
+.google-maps-link {
   font-size: 0.8rem;
   opacity: 0.6;
+}
+.google-maps-link {
+  margin-top: 4px;
 }

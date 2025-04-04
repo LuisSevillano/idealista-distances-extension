@@ -176,6 +176,24 @@ async function displayPopupInListing(item, latitude, longitude) {
   }
 }
 
+function createGoogleMapsLinkHTML(
+  popup,
+  latitude,
+  longitude,
+  addressVisibility,
+) {
+  let isExactMessage = "";
+  // https://www.google.com/maps?q=40.4168,-3.7038
+  if (addressVisibility === "HIDDEN") {
+    isExactMessage = "(Aprox.)";
+  }
+  popup.innerHTML = `
+    <div class="google-maps-link">
+        <a target="_blank" href="https://www.google.com/maps?q=${latitude},${longitude}&t=k">Ver en GoogleMaps</a> ${isExactMessage}
+    </div>
+    `;
+}
+
 // Handle entries for each listing item that is being observed
 function handleListingItem(entries, observer) {
   entries.forEach((entry) => {
@@ -233,7 +251,7 @@ async function fetchDetailData(propertyId) {
   try {
     const response = await fetch(apiUrl);
     const responseData = await response.json();
-    const { coordinates } = responseData.data.map;
+    const { coordinates, addressVisibility } = responseData.data.map;
     if (coordinates && coordinates.latitude && coordinates.longitude) {
       let popupContainer = document.createElement("div");
       popupContainer.classList.add("popup-container");
@@ -272,6 +290,17 @@ async function fetchDetailData(propertyId) {
           secondaryResult.timeFormatted,
           secondaryResult.color,
           secondaryResult.locationLabel,
+        );
+      }
+      if (isList === false) {
+        const popup = createPopup();
+        popupContainer.appendChild(popup);
+
+        createGoogleMapsLinkHTML(
+          popup,
+          coordinates.latitude,
+          coordinates.longitude,
+          addressVisibility,
         );
       }
       popupContainer.classList.add("active");
